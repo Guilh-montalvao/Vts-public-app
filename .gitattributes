@@ -1,0 +1,29 @@
+# Marca pastas geradas pelo Flutter/ferramentas como vendored (ignoradas nas estatísticas)
+windows/** linguist-vendored
+linux/** linguist-vendored
+macos/** linguist-vendored
+android/** linguist-vendored
+ios/** linguist-vendored
+web/** linguist-vendored
+
+# Marca arquivos de build e configuração como generated (ignorados nas estatísticas)
+build/** linguist-generated
+.dart_tool/** linguist-generated
+*.cmake linguist-generated
+CMakeLists.txt linguist-generated
+*/CMakeLists.txt linguist-generated
+**/cmake/** linguist-generated
+
+# Arquivos binários para serem ignorados nas estatísticas
+*.dll linguist-generated
+*.so linguist-generated
+*.dylib linguist-generated
+*.a linguist-generated
+
+# Arquivos gerados automaticamente pelo Flutter para serem ignorados nas estatísticas
+**/*.g.dart linguist-generated
+**/*.freezed.dart linguist-generated
+**/*.gen.dart linguist-generated
+
+# Definir explicitamente arquivos Dart para serem reconhecidos como Dart (importante)
+*.dart linguist-language=Dart 
