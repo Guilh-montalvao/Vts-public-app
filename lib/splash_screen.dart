@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io' show Platform;
 
+// Tela de splash animada que aparece ao iniciar o app
 class SplashScreen extends StatefulWidget {
+  // Próxima tela para navegar após o splash
   final Widget nextScreen;
 
   const SplashScreen({super.key, required this.nextScreen});
@@ -13,27 +15,27 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _scaleAnimation;
-  late Animation<double> _opacityAnimation;
-  late bool _isDesktop;
+  late AnimationController _animationController; // Controlador das animações
+  late Animation<double> _scaleAnimation; // Animação de escala do logo
+  late Animation<double> _opacityAnimation; // Animação de opacidade do logo
+  late bool _isDesktop; // Indica se está rodando em desktop
 
   @override
   void initState() {
     super.initState();
 
-    // Detecta se é plataforma desktop
+    // Detecta se a plataforma é desktop (Windows, Linux ou MacOS)
     _isDesktop = _isDesktopPlatform();
 
-    // Configurar controlador de animação
+    // Configura o controlador de animação
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: _isDesktop ? 2200 : 1800),
     );
 
-    // Animação de escala
+    // Configura as animações de escala e opacidade de acordo com a plataforma
     if (_isDesktop) {
-      // Configuração para Windows (evita tremulação)
+      // Animação para Windows (evita tremulação)
       _scaleAnimation = Tween<double>(
         begin: 0.9,
         end: 1.0,
@@ -44,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen>
         ),
       );
 
-      // Opacidade para Windows
+      // Animação de opacidade para Windows
       _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
           parent: _animationController,
@@ -52,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen>
         ),
       );
     } else {
-      // Configuração original para Chrome (mantém comportamento exato)
+      // Animação original para Chrome/web (mantém comportamento exato)
       _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
         CurvedAnimation(
           parent: _animationController,
@@ -60,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen>
         ),
       );
 
-      // Opacidade original para Chrome
+      // Animação de opacidade original para Chrome/web
       _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
           parent: _animationController,
@@ -69,16 +71,17 @@ class _SplashScreenState extends State<SplashScreen>
       );
     }
 
-    // Iniciar animação
+    // Inicia a animação
     _animationController.forward();
 
-    // Navegar para a próxima tela após 3 segundos
+    // Navega para a próxima tela após 3 segundos
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => widget.nextScreen));
     });
   }
 
+  // Função auxiliar para detectar se está em plataforma desktop
   bool _isDesktopPlatform() {
     try {
       return Platform.isWindows || Platform.isLinux || Platform.isMacOS;
@@ -90,13 +93,14 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
+    // Libera o controlador de animação ao destruir o widget
     _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Pré-renderizar a imagem para evitar recriação durante a animação
+    // Pré-renderiza a imagem para evitar recriação durante a animação
     final Widget logoImage = Image.asset(
       'assets/images/logo-vts.png',
       width: 160,
@@ -109,6 +113,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: SafeArea(
         child: Column(
           children: [
+            // Espaço superior proporcional à altura da tela
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.1,
             ),
@@ -148,9 +153,9 @@ class _SplashScreenState extends State<SplashScreen>
             ),
             Expanded(
               flex: 1,
-              child: Container(),
+              child: Container(), // Espaço vazio para balancear o layout
             ),
-            const SizedBox(height: 40.0),
+            const SizedBox(height: 40.0), // Espaço inferior
           ],
         ),
       ),
