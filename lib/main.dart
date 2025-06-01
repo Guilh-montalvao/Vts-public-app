@@ -41,11 +41,90 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Tela principal (home) do aplicativo
-class MyHomePage extends StatelessWidget {
+// Tela principal (home) do aplicativo com animações de entrada
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
   final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
+  // Controlador de animação único para todos os elementos
+  late AnimationController _animationController;
+
+  // Animações de opacidade e posição/escala
+  late Animation<double> _logoOpacity;
+  late Animation<double> _logoScale;
+  late Animation<double> _buttonsOpacity;
+  late Animation<Offset> _buttonsOffset;
+  late Animation<double> _bottomBarOpacity;
+  late Animation<Offset> _bottomBarOffset;
+
+  @override
+  void initState() {
+    super.initState();
+    // Um único controlador para todas as animações
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200), // Duração mais suave
+    );
+
+    // Animação de opacidade da logo (primeiro a aparecer)
+    _logoOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.0, 0.5, curve: Curves.easeInOutCubic),
+      ),
+    );
+    // Animação de escala da logo
+    _logoScale = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.0, 0.5, curve: Curves.easeInOutCubic),
+      ),
+    );
+    // Animação dos botões (aparecem logo após a logo)
+    _buttonsOpacity = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.35, 0.8, curve: Curves.easeInOutCubic),
+      ),
+    );
+    _buttonsOffset =
+        Tween<Offset>(begin: const Offset(0, 0.2), end: Offset.zero).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.35, 0.8, curve: Curves.easeInOutCubic),
+      ),
+    );
+    // Animação da barra inferior (entra por último)
+    _bottomBarOpacity = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.7, 1.0, curve: Curves.easeInOutCubic),
+      ),
+    );
+    _bottomBarOffset =
+        Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.7, 1.0, curve: Curves.easeInOutCubic),
+      ),
+    );
+
+    // Inicia todas as animações
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    // Libera o controlador de animação
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +136,7 @@ class MyHomePage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // Topo com logo SVG centralizada e sino à direita
+            // Topo com logo SVG centralizada e sino à direita, animados
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
@@ -66,21 +145,33 @@ class MyHomePage extends StatelessWidget {
                 children: [
                   // Espaço para centralizar a logo
                   const SizedBox(width: 24),
-                  // Logo SVG centralizada
+                  // Logo SVG centralizada com animação de ressurgimento (escala + opacidade)
                   Expanded(
-                    child: Column(
-                      children: [
-                        // Exibe a logo SVG centralizada
-                        SvgPicture.asset(
-                          'assets/images/logo-horizontal.svg',
-                          width: 100,
-                          height: 60,
-                          fit: BoxFit.contain,
-                        ),
-                      ],
+                    child: AnimatedBuilder(
+                      animation: _animationController,
+                      builder: (context, child) {
+                        return Transform.scale(
+                          scale: _logoScale.value,
+                          child: Opacity(
+                            opacity: _logoOpacity.value,
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          // Exibe a logo SVG centralizada
+                          SvgPicture.asset(
+                            'assets/images/logo-horizontal.svg',
+                            width: 100,
+                            height: 60,
+                            fit: BoxFit.contain,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  // Sino de notificação no topo direito
+                  // Sino de notificação no topo direito (sem animação)
                   IconButton(
                     icon: const Icon(Icons.notifications_none,
                         size: 32, color: Colors.black54),
@@ -90,43 +181,55 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            // Botões principais
+            // Botões principais animados
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                children: [
-                  _HomeButton(
-                    icon: Icons.groups_2,
-                    iconSecondary: Icons.error_outline,
-                    text: 'Denúncia de focos',
-                    onTap: () {},
+              child: SlideTransition(
+                position: _buttonsOffset,
+                child: FadeTransition(
+                  opacity: _buttonsOpacity,
+                  child: Column(
+                    children: [
+                      _HomeButton(
+                        icon: Icons.groups_2,
+                        iconSecondary: Icons.error_outline,
+                        text: 'Denúncia de focos',
+                        onTap: () {},
+                      ),
+                      const SizedBox(height: 24),
+                      _HomeButton(
+                        icon: Icons.language,
+                        text: 'Site do Projeto',
+                        onTap: () {},
+                      ),
+                      const SizedBox(height: 24),
+                      _HomeButton(
+                        icon: Icons.sanitizer,
+                        text: 'Como prevenir focos',
+                        onTap: () {},
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 24),
-                  _HomeButton(
-                    icon: Icons.language,
-                    text: 'Site do Projeto',
-                    onTap: () {},
-                  ),
-                  const SizedBox(height: 24),
-                  _HomeButton(
-                    icon: Icons.sanitizer,
-                    text: 'Como prevenir focos',
-                    onTap: () {},
-                  ),
-                ],
+                ),
               ),
             ),
             const Spacer(),
-            // Barra inferior com ícones
+            // Barra inferior com ícones animados
             Padding(
               padding: const EdgeInsets.only(bottom: 32.0, left: 32, right: 32),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  Icon(Icons.mail_outline, color: primaryColor, size: 32),
-                  Icon(Icons.phone, color: primaryColor, size: 32),
-                  Icon(Icons.language, color: primaryColor, size: 32),
-                ],
+              child: SlideTransition(
+                position: _bottomBarOffset,
+                child: FadeTransition(
+                  opacity: _bottomBarOpacity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: const [
+                      Icon(Icons.mail_outline, color: primaryColor, size: 32),
+                      Icon(Icons.phone, color: primaryColor, size: 32),
+                      Icon(Icons.language, color: primaryColor, size: 32),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
