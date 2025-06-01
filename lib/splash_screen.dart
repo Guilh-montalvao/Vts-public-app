@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'dart:io' show Platform;
 
 class SplashScreen extends StatefulWidget {
   final Widget nextScreen;
@@ -15,32 +16,58 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _opacityAnimation;
+  late bool _isDesktop;
 
   @override
   void initState() {
     super.initState();
 
+    // Detecta se é plataforma desktop
+    _isDesktop = _isDesktopPlatform();
+
     // Configurar controlador de animação
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
+      duration: Duration(milliseconds: _isDesktop ? 2200 : 1800),
     );
 
-    // Animação de escala - usando curva mais suave
-    _scaleAnimation = Tween<double>(begin: 0.6, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeOutCubic, // Curva mais suave que easeOutBack
-      ),
-    );
+    // Animação de escala
+    if (_isDesktop) {
+      // Configuração para Windows (evita tremulação)
+      _scaleAnimation = Tween<double>(
+        begin: 0.9,
+        end: 1.0,
+      ).animate(
+        CurvedAnimation(
+          parent: _animationController,
+          curve: Curves.easeOutCirc,
+        ),
+      );
 
-    // Animação de opacidade
-    _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: const Interval(0.0, 0.7, curve: Curves.easeIn),
-      ),
-    );
+      // Opacidade para Windows
+      _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(
+          parent: _animationController,
+          curve: const Interval(0.0, 0.6, curve: Curves.easeIn),
+        ),
+      );
+    } else {
+      // Configuração original para Chrome (mantém comportamento exato)
+      _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
+        CurvedAnimation(
+          parent: _animationController,
+          curve: Curves.easeOutQuad,
+        ),
+      );
+
+      // Opacidade original para Chrome
+      _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(
+          parent: _animationController,
+          curve: const Interval(0.0, 0.7, curve: Curves.easeIn),
+        ),
+      );
+    }
 
     // Iniciar animação
     _animationController.forward();
@@ -50,6 +77,15 @@ class _SplashScreenState extends State<SplashScreen>
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => widget.nextScreen));
     });
+  }
+
+  bool _isDesktopPlatform() {
+    try {
+      return Platform.isWindows || Platform.isLinux || Platform.isMacOS;
+    } catch (e) {
+      // Em ambiente web, Platform não está disponível
+      return false;
+    }
   }
 
   @override
@@ -63,87 +99,58 @@ class _SplashScreenState extends State<SplashScreen>
     // Pré-renderizar a imagem para evitar recriação durante a animação
     final Widget logoImage = Image.asset(
       'assets/images/logo-vts.png',
-      width: 160, // Aumentado em 1/3 (120 * 4/3 = 160)
-      height: 160, // Aumentado em 1/3 (120 * 4/3 = 160)
-      // Desativar antialiasing pode ajudar em alguns casos
-      filterQuality: FilterQuality.medium,
-    );
-
-    // Pré-renderizar logos do rodapé
-    final Widget fapdfLogo = Image.asset(
-      'assets/images/logo-fapdf.png',
-      height: 53,
-    );
-
-    final Widget idpLogo = Image.asset(
-      'assets/images/logo-idp.png',
-      height: 53,
+      width: 160,
+      height: 160,
+      filterQuality: FilterQuality.high,
     );
 
     return Scaffold(
-      backgroundColor: const Color(0xFF00619A), // Cor de fundo #00619A
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
-            // Espaçamento ajustado - redução de 1/3 do espaço superior
             SizedBox(
-              height: MediaQuery.of(context).size.height *
-                  0.1, // Espaço reduzido no topo
+              height: MediaQuery.of(context).size.height * 0.1,
             ),
-            // Logo principal deslocado para cima
             Expanded(
-              flex:
-                  2, // Mais espaço para esta seção, empurrando o logo para cima
+              flex: 2,
               child: Center(
                 child: AnimatedBuilder(
                   animation: _animationController,
-                  // Usar child pré-construído para evitar reconstrução
                   child: logoImage,
                   builder: (context, child) {
-                    return Transform.scale(
-                      scale: _scaleAnimation.value,
-                      // Usar alignment center para escala a partir do centro
-                      alignment: Alignment.center,
-                      child: Opacity(
-                        opacity: _opacityAnimation.value,
-                        child: child,
-                      ),
+                    return RepaintBoundary(
+                      child: _isDesktop
+                          // Implementação otimizada para desktop (resolve tremulação)
+                          ? FadeTransition(
+                              opacity: _opacityAnimation,
+                              child: AnimatedScale(
+                                scale: _scaleAnimation.value,
+                                duration: const Duration(milliseconds: 100),
+                                curve: Curves.linear,
+                                child: child,
+                              ),
+                            )
+                          // Implementação original para web (comportamento idêntico ao anterior)
+                          : Transform.scale(
+                              scale: _scaleAnimation.value,
+                              alignment: Alignment.center,
+                              transformHitTests: false,
+                              child: Opacity(
+                                opacity: _opacityAnimation.value,
+                                child: child,
+                              ),
+                            ),
                     );
                   },
                 ),
               ),
             ),
-            // Espaçador flexível
             Expanded(
-              flex: 1, // Espaço flexível entre o logo e o rodapé
+              flex: 1,
               child: Container(),
             ),
-            // Rodapé com os logos
-            Padding(
-              padding: const EdgeInsets.only(bottom: 40.0),
-              child: AnimatedBuilder(
-                animation: _animationController,
-                builder: (context, child) {
-                  return Opacity(
-                    opacity: _opacityAnimation.value,
-                    child: Transform.scale(
-                      scale: _scaleAnimation.value,
-                      alignment: Alignment.center,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // Logo FAPDF
-                          fapdfLogo,
-                          const SizedBox(width: 20),
-                          // Logo IDP
-                          idpLogo,
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            const SizedBox(height: 40.0),
           ],
         ),
       ),
