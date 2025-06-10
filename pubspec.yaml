@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_native_splash: ^2.4.0 # Para tela de splash nativa
   flutter_svg: ^2.0.9 # Para renderizar arquivos SVG
+  file_picker: ^10.1.9 # Para selecionar arquivos múltiplos
+  permission_handler: ^12.0.0+1
+  file_selector: ^1.0.3
 
 dev_dependencies:
   flutter_test:
