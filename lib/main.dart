@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart'; // Importa o pacote para exibir SVG
 import 'splash_screen.dart';
+import 'screens/denuncia_foco_screen.dart'; // Importa a nova tela
 
 void main() {
   // Função principal que inicializa o aplicativo Flutter
@@ -194,7 +195,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         icon: Icons.groups_2,
                         iconSecondary: Icons.error_outline,
                         text: 'Denúncia de focos',
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const DenunciaFocoScreen()),
+                          );
+                        },
                       ),
                       const SizedBox(height: 24),
                       _HomeButton(
