@@ -103,8 +103,8 @@ class _SplashScreenState extends State<SplashScreen>
     // Pré-renderiza a imagem para evitar recriação durante a animação
     final Widget logoImage = Image.asset(
       'assets/images/logo-vts.png',
-      width: 160,
-      height: 160,
+      width: 260,
+      height: 260,
       filterQuality: FilterQuality.high,
     );
 
