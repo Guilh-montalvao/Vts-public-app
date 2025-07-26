@@ -19,19 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false, // Remove a faixa de debug
       theme: ThemeData(
         // Definição do tema do aplicativo
-        //
-        // DICA: Tente rodar seu aplicativo com "flutter run". Você verá
-        // que o aplicativo tem uma barra superior roxa. Depois, sem fechar o app,
-        // tente mudar o seedColor no colorScheme abaixo para Colors.green
-        // e então use o "hot reload" (salve suas alterações ou pressione o botão
-        // "hot reload" em um IDE compatível com Flutter, ou pressione "r" se estiver
-        // usando o terminal para rodar o app).
-        //
-        // Note que o contador não volta para zero; o estado do aplicativo
-        // não é perdido durante o reload. Para resetar o estado, use o hot restart.
-        //
-        // Isso funciona para código também, não apenas valores: a maioria das mudanças
-        // de código pode ser testada apenas com hot reload.
+
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF00619A)),
         useMaterial3: true,
       ),
