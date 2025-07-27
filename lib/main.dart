@@ -40,10 +40,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
-  // Controlador de animação único para todos os elementos
   late AnimationController _animationController;
-
-  // Animações de opacidade e posição/escala
   late Animation<double> _logoOpacity;
   late Animation<double> _logoScale;
   late Animation<double> _buttonsOpacity;
@@ -54,27 +51,22 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    // Um único controlador para todas as animações
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200), // Duração mais suave
+      duration: const Duration(milliseconds: 1200),
     );
-
-    // Animação de opacidade da logo (primeiro a aparecer)
     _logoOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
         curve: const Interval(0.0, 0.5, curve: Curves.easeInOutCubic),
       ),
     );
-    // Animação de escala da logo
     _logoScale = Tween<double>(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
         curve: const Interval(0.0, 0.5, curve: Curves.easeInOutCubic),
       ),
     );
-    // Animação dos botões (aparecem logo após a logo)
     _buttonsOpacity = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _animationController,
@@ -88,7 +80,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         curve: const Interval(0.35, 0.8, curve: Curves.easeInOutCubic),
       ),
     );
-    // Animação da barra inferior (entra por último)
     _bottomBarOpacity = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _animationController,
@@ -102,76 +93,55 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         curve: const Interval(0.7, 1.0, curve: Curves.easeInOutCubic),
       ),
     );
-
-    // Inicia todas as animações
     _animationController.forward();
   }
 
   @override
   void dispose() {
-    // Libera o controlador de animação
     _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Cor padrão dos ícones e botões
-    const Color primaryColor = Color(0xFF31738A);
-
+    const Color iconColor = Colors.black87;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
-            // Topo com logo SVG centralizada e sino à direita, animados
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Espaço para centralizar a logo
-                  const SizedBox(width: 24),
-                  // Logo SVG centralizada com animação de ressurgimento (escala + opacidade)
-                  Expanded(
-                    child: AnimatedBuilder(
-                      animation: _animationController,
-                      builder: (context, child) {
-                        return Transform.scale(
-                          scale: _logoScale.value,
-                          child: Opacity(
-                            opacity: _logoOpacity.value,
-                            child: child,
-                          ),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          // Exibe a logo SVG centralizada
-                          SvgPicture.asset(
-                            'assets/images/logo-horizontal.svg',
-                            width: 100,
-                            height: 60,
-                            fit: BoxFit.contain,
-                          ),
-                        ],
-                      ),
+                  AnimatedBuilder(
+                    animation: _animationController,
+                    builder: (context, child) {
+                      return Transform.scale(
+                        scale: _logoScale.value,
+                        child: Opacity(
+                          opacity: _logoOpacity.value,
+                          child: child,
+                        ),
+                      );
+                    },
+                    child: SvgPicture.asset(
+                      'assets/images/logo-vts-black.png',
+                      width: 40,
+                      height: 40,
                     ),
                   ),
-                  // Sino de notificação no topo direito (sem animação)
                   IconButton(
-                    icon: const Icon(Icons.notifications_none,
-                        size: 32, color: Colors.black54),
+                    icon: const Icon(Icons.notifications_none, size: 28, color: Colors.black87),
                     onPressed: () {},
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 32),
-            // Botões principais animados
+            const SizedBox(height: 16),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: SlideTransition(
                 position: _buttonsOffset,
                 child: FadeTransition(
@@ -179,21 +149,23 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   child: Column(
                     children: [
                       _HomeButton(
-                        icon: Icons.groups_2,
-                        iconSecondary: Icons.error_outline,
-                        text: 'Denúncia de focos',
+                        icon: Icons.error_outline,
+                        title: 'Denúncia de focos',
+                        subtitle: 'Send notifications to device.',
                         onTap: () {},
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 16),
                       _HomeButton(
-                        icon: Icons.language,
-                        text: 'Site do Projeto',
+                        icon: Icons.security,
+                        title: 'Aprenda como prevenir focos',
+                        subtitle: 'Send notifications to device.',
                         onTap: () {},
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 16),
                       _HomeButton(
-                        icon: Icons.sanitizer,
-                        text: 'Como prevenir focos',
+                        icon: Icons.public,
+                        title: 'Mapa de denúncias',
+                        subtitle: 'Send notifications to device.',
                         onTap: () {},
                       ),
                     ],
@@ -202,22 +174,25 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               ),
             ),
             const Spacer(),
-            // Barra inferior com ícones animados
             Padding(
-              padding: const EdgeInsets.only(bottom: 32.0, left: 32, right: 32),
-              child: SlideTransition(
-                position: _bottomBarOffset,
-                child: FadeTransition(
-                  opacity: _bottomBarOpacity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      Icon(Icons.mail_outline, color: primaryColor, size: 32),
-                      Icon(Icons.phone, color: primaryColor, size: 32),
-                      Icon(Icons.language, color: primaryColor, size: 32),
+              padding: const EdgeInsets.only(bottom: 24.0),
+              child: Column(
+                children: [
+                  const Text(
+                    'Para mais informações e atualizações, nos siga nas redes sociais',
+                    style: TextStyle(fontSize: 13, color: Colors.black38),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.mail_outline, color: iconColor, size: 32),
+                      const SizedBox(width: 32),
+                      Icon(Icons.public, color: iconColor, size: 32),
                     ],
                   ),
-                ),
+                ],
               ),
             ),
           ],
@@ -227,59 +202,58 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 }
 
-// Widget customizado para os botões grandes da home
 class _HomeButton extends StatelessWidget {
   final IconData icon;
-  final IconData? iconSecondary;
-  final String text;
+  final String title;
+  final String subtitle;
   final VoidCallback onTap;
 
   const _HomeButton({
     required this.icon,
-    this.iconSecondary,
-    required this.text,
+    required this.title,
+    required this.subtitle,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Botão customizado com ícone grande à esquerda e texto à direita
     return InkWell(
-      borderRadius: BorderRadius.circular(24),
+      borderRadius: BorderRadius.circular(16),
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black26, width: 1.2),
-          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: Colors.black26, width: 1),
+          borderRadius: BorderRadius.circular(12),
           color: Colors.white,
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Ícone principal
-            Stack(
-              alignment: Alignment.topRight,
-              children: [
-                Icon(icon, color: Color(0xFF31738A), size: 48),
-                if (iconSecondary != null)
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child:
-                        Icon(iconSecondary, color: Color(0xFF31738A), size: 20),
-                  ),
-              ],
-            ),
-            const SizedBox(width: 24),
+            Icon(icon, color: Colors.black87, size: 32),
+            const SizedBox(width: 16),
             Expanded(
-              child: Text(
-                text,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black87,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black45,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
