@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.notifications_none, size: 28, color: Colors.black87),
+                    icon: const Icon(Icons.notifications_none, size: 32, color: Colors.black87),
                     onPressed: () {},
                   ),
                 ],
@@ -177,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 children: [
                   const Text(
                     'Para mais informações e atualizações, nos siga nas redes sociais',
-                    style: TextStyle(fontSize: 13, color: Colors.black38),
+                    style: TextStyle(fontSize: 10, color: Colors.black38),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 12),
@@ -237,7 +237,7 @@ class _HomeButton extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
-                      fontSize: 17,
+                      fontSize: 18,
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
