@@ -172,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             ),
             const Spacer(),
             Padding(
-              padding: const EdgeInsets.only(bottom: 24.0),
+              padding: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 24.0),
               child: Column(
                 children: [
                   const Text(
@@ -226,7 +226,7 @@ class _HomeButton extends StatelessWidget {
           color: Colors.white,
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(icon, color: Colors.black87, size: 32),
             const SizedBox(width: 16),
