@@ -126,10 +126,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         ),
                       );
                     },
-                    child: SvgPicture.asset(
+                    child: Image.asset(
                       'assets/images/logo-vts-black.png',
-                      width: 40,
-                      height: 40,
+                      width: 32,
+                      height: 32,
                     ),
                   ),
                   IconButton(
