@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart'; // Importa o pacote para exibir SVG
 import 'splash_screen.dart';
 
 void main() {
@@ -45,8 +44,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   late Animation<double> _logoScale;
   late Animation<double> _buttonsOpacity;
   late Animation<Offset> _buttonsOffset;
-  late Animation<double> _bottomBarOpacity;
-  late Animation<Offset> _bottomBarOffset;
 
   @override
   void initState() {
@@ -80,19 +77,19 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         curve: const Interval(0.35, 0.8, curve: Curves.easeInOutCubic),
       ),
     );
-    _bottomBarOpacity = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: const Interval(0.7, 1.0, curve: Curves.easeInOutCubic),
-      ),
-    );
-    _bottomBarOffset =
-        Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: const Interval(0.7, 1.0, curve: Curves.easeInOutCubic),
-      ),
-    );
+    // _bottomBarOpacity = Tween<double>(begin: 0, end: 1).animate(
+    //   CurvedAnimation(
+    //     parent: _animationController,
+    //     curve: const Interval(0.7, 1.0, curve: Curves.easeInOutCubic),
+    //   ),
+    // );
+    // _bottomBarOffset =
+    //     Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
+    //   CurvedAnimation(
+    //     parent: _animationController,
+    //     curve: const Interval(0.7, 1.0, curve: Curves.easeInOutCubic),
+    //   ),
+    // );
     _animationController.forward();
   }
 
