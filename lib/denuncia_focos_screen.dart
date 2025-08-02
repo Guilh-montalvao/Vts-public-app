@@ -75,15 +75,15 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                   decoration: InputDecoration(
                     hintText: 'Endereço',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(6),
                       borderSide: const BorderSide(color: Colors.black26, width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(6),
                       borderSide: const BorderSide(color: Colors.black26, width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(6),
                       borderSide: const BorderSide(color: Colors.black26, width: 1.5),
                     ),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -96,15 +96,15 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                   decoration: InputDecoration(
                     hintText: 'Conte mais sobre o problema',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(6),
                       borderSide: const BorderSide(color: Colors.black26, width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(6),
                       borderSide: const BorderSide(color: Colors.black26, width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(6),
                       borderSide: const BorderSide(color: Colors.black26, width: 1.5),
                     ),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -116,7 +116,7 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 24),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black26, width: 1),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(6),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
