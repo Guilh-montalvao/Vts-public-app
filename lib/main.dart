@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'splash_screen.dart';
+import 'denuncia_focos_screen.dart';
 
 void main() {
   // Função principal que inicializa o aplicativo Flutter
@@ -149,7 +150,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         icon: Icons.error_outline,
                         title: 'Denúncia de focos',
                         subtitle: 'Send notifications to device.',
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const DenunciaFocosScreen(),
+                            ),
+                          );
+                        },
                       ),
                       const SizedBox(height: 16),
                       _HomeButton(
