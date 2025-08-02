@@ -89,7 +89,7 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 16),
                 TextField(
                   minLines: 4,
                   maxLines: 6,
