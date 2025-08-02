@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DenunciaFocosScreen extends StatefulWidget {
-  const DenunciaFocosScreen({Key? key}) : super(key: key);
+  const DenunciaFocosScreen({super.key});
 
   @override
   State<DenunciaFocosScreen> createState() => _DenunciaFocosScreenState();
@@ -43,28 +43,30 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                   decoration: InputDecoration(
                     hintText: 'Nome',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(6),
                       borderSide: const BorderSide(color: Colors.black26, width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(6),
                       borderSide: const BorderSide(color: Colors.black26, width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(6),
                       borderSide: const BorderSide(color: Colors.black26, width: 1.5),
                     ),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 0),
                 Row(
                   children: [
                     Checkbox(
                       value: isAnonimo,
                       onChanged: (v) => setState(() => isAnonimo = v ?? false),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                       side: const BorderSide(color: Colors.black26, width: 1),
+                      checkColor: Colors.white,
+                      activeColor: Colors.black,
                     ),
                     const Text('Anônimo', style: TextStyle(color: Colors.black45, fontSize: 16)),
                   ],
