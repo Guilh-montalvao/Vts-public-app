@@ -56,13 +56,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     _logoOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: const Interval(0.0, 0.5, curve: Curves.easeInOutCubic),
+        curve: const Interval(0.35, 0.8, curve: Curves.easeInOutCubic),
       ),
     );
     _logoScale = Tween<double>(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: const Interval(0.0, 0.5, curve: Curves.easeInOutCubic),
+        curve: const Interval(0.35, 0.8, curve: Curves.easeInOutCubic),
       ),
     );
     _buttonsOpacity = Tween<double>(begin: 0, end: 1).animate(
