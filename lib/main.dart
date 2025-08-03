@@ -182,18 +182,36 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               padding: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 24.0),
               child: Column(
                 children: [
-                  const Text(
-                    'Para mais informações e atualizações, nos siga nas redes sociais',
-                    style: TextStyle(fontSize: 10, color: Colors.black38),
-                    textAlign: TextAlign.center,
+                  SlideTransition(
+                    position: _buttonsOffset,
+                    child: FadeTransition(
+                      opacity: _buttonsOpacity,
+                      child: const Text(
+                        'Para mais informações e atualizações, nos siga nas redes sociais',
+                        style: TextStyle(fontSize: 10, color: Colors.black38),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.mail_outline, color: iconColor, size: 32),
+                      SlideTransition(
+                        position: _buttonsOffset,
+                        child: FadeTransition(
+                          opacity: _buttonsOpacity,
+                          child: Icon(Icons.mail_outline, color: iconColor, size: 32),
+                        ),
+                      ),
                       const SizedBox(width: 32),
-                      Icon(Icons.public, color: iconColor, size: 32),
+                      SlideTransition(
+                        position: _buttonsOffset,
+                        child: FadeTransition(
+                          opacity: _buttonsOpacity,
+                          child: Icon(Icons.public, color: iconColor, size: 32),
+                        ),
+                      ),
                     ],
                   ),
                 ],
