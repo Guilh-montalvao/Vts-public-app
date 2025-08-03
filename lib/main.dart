@@ -11,7 +11,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // Este widget é a raiz da sua aplicação.
+  // Widget raiz da sua aplicação.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -56,13 +56,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     _logoOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: const Interval(0.0, 0.5, curve: Curves.easeInOutCubic),
+        curve: const Interval(0.35, 0.8, curve: Curves.easeInOutCubic),
       ),
     );
     _logoScale = Tween<double>(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: const Interval(0.0, 0.5, curve: Curves.easeInOutCubic),
+        curve: const Interval(0.35, 0.8, curve: Curves.easeInOutCubic),
       ),
     );
     _buttonsOpacity = Tween<double>(begin: 0, end: 1).animate(
@@ -78,19 +78,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         curve: const Interval(0.35, 0.8, curve: Curves.easeInOutCubic),
       ),
     );
-    // _bottomBarOpacity = Tween<double>(begin: 0, end: 1).animate(
-    //   CurvedAnimation(
-    //     parent: _animationController,
-    //     curve: const Interval(0.7, 1.0, curve: Curves.easeInOutCubic),
-    //   ),
-    // );
-    // _bottomBarOffset =
-    //     Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
-    //   CurvedAnimation(
-    //     parent: _animationController,
-    //     curve: const Interval(0.7, 1.0, curve: Curves.easeInOutCubic),
-    //   ),
-    // );
+    
     _animationController.forward();
   }
 
@@ -113,26 +101,38 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Transform.scale(
-                        scale: _logoScale.value,
-                        child: Opacity(
-                          opacity: _logoOpacity.value,
-                          child: child,
+                  SlideTransition(
+                    position: _buttonsOffset,
+                    child: FadeTransition(
+                      opacity: _buttonsOpacity,
+                      child: AnimatedBuilder(
+                        animation: _animationController,
+                        builder: (context, child) {
+                          return Transform.scale(
+                            scale: _logoScale.value,
+                            child: Opacity(
+                              opacity: _logoOpacity.value,
+                              child: child,
+                            ),
+                          );
+                        },
+                        child: Image.asset(
+                          'assets/images/logo-vts-black.png',
+                          width: 32,
+                          height: 32,
                         ),
-                      );
-                    },
-                    child: Image.asset(
-                      'assets/images/logo-vts-black.png',
-                      width: 32,
-                      height: 32,
+                      ),
                     ),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.notifications_none, size: 32, color: Colors.black87),
-                    onPressed: () {},
+                  SlideTransition(
+                    position: _buttonsOffset,
+                    child: FadeTransition(
+                      opacity: _buttonsOpacity,
+                      child: IconButton(
+                        icon: const Icon(Icons.notifications_none, size: 32, color: Colors.black87),
+                        onPressed: () {},
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -182,18 +182,36 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               padding: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 24.0),
               child: Column(
                 children: [
-                  const Text(
-                    'Para mais informações e atualizações, nos siga nas redes sociais',
-                    style: TextStyle(fontSize: 10, color: Colors.black38),
-                    textAlign: TextAlign.center,
+                  SlideTransition(
+                    position: _buttonsOffset,
+                    child: FadeTransition(
+                      opacity: _buttonsOpacity,
+                      child: const Text(
+                        'Para mais informações e atualizações, nos siga nas redes sociais',
+                        style: TextStyle(fontSize: 10, color: Colors.black38),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.mail_outline, color: iconColor, size: 32),
+                      SlideTransition(
+                        position: _buttonsOffset,
+                        child: FadeTransition(
+                          opacity: _buttonsOpacity,
+                          child: Icon(Icons.mail_outline, color: iconColor, size: 32),
+                        ),
+                      ),
                       const SizedBox(width: 32),
-                      Icon(Icons.public, color: iconColor, size: 32),
+                      SlideTransition(
+                        position: _buttonsOffset,
+                        child: FadeTransition(
+                          opacity: _buttonsOpacity,
+                          child: Icon(Icons.public, color: iconColor, size: 32),
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -222,14 +240,14 @@ class _HomeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(6),
       onTap: onTap,
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black26, width: 1),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(6),
           color: Colors.white,
         ),
         child: Row(
@@ -244,7 +262,7 @@ class _HomeButton extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
