@@ -53,6 +53,7 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                 ),
                 const SizedBox(height: 24),
                 TextField(
+                  style: const TextStyle(fontSize: 14),
                   decoration: InputDecoration(
                     hintText: 'Nome',
                     border: OutlineInputBorder(
@@ -85,6 +86,7 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                   ],
                 ),
                 TextField(
+                  style: const TextStyle(fontSize: 14),
                   decoration: InputDecoration(
                     hintText: 'Endereço',
                     border: OutlineInputBorder(
@@ -106,6 +108,7 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                 TextField(
                   minLines: 4,
                   maxLines: 6,
+                  style: const TextStyle(fontSize: 14),
                   decoration: InputDecoration(
                     hintText: 'Conte mais sobre o problema',
                     border: OutlineInputBorder(
