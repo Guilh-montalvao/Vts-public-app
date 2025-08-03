@@ -23,14 +23,27 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AnimatedBuilder(
-                      animation: Listenable.merge([]), // No animation, but keeps structure similar
-                      builder: (context, child) => child!,
-                      child: Image.asset(
-                        'assets/images/logo-vts-black.png',
-                        width: 32,
-                        height: 32,
-                      ),
+                    Row(
+                      children: [
+                        AnimatedBuilder(
+                          animation: Listenable.merge([]),
+                          builder: (context, child) => child!,
+                          child: Image.asset(
+                            'assets/images/logo-vts-black.png',
+                            width: 32,
+                            height: 32,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'Denúncia de focos',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
                     IconButton(
                       icon: const Icon(Icons.notifications_none, size: 32, color: Colors.black87),
