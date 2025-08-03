@@ -101,26 +101,38 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Transform.scale(
-                        scale: _logoScale.value,
-                        child: Opacity(
-                          opacity: _logoOpacity.value,
-                          child: child,
+                  SlideTransition(
+                    position: _buttonsOffset,
+                    child: FadeTransition(
+                      opacity: _buttonsOpacity,
+                      child: AnimatedBuilder(
+                        animation: _animationController,
+                        builder: (context, child) {
+                          return Transform.scale(
+                            scale: _logoScale.value,
+                            child: Opacity(
+                              opacity: _logoOpacity.value,
+                              child: child,
+                            ),
+                          );
+                        },
+                        child: Image.asset(
+                          'assets/images/logo-vts-black.png',
+                          width: 32,
+                          height: 32,
                         ),
-                      );
-                    },
-                    child: Image.asset(
-                      'assets/images/logo-vts-black.png',
-                      width: 32,
-                      height: 32,
+                      ),
                     ),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.notifications_none, size: 32, color: Colors.black87),
-                    onPressed: () {},
+                  SlideTransition(
+                    position: _buttonsOffset,
+                    child: FadeTransition(
+                      opacity: _buttonsOpacity,
+                      child: IconButton(
+                        icon: const Icon(Icons.notifications_none, size: 32, color: Colors.black87),
+                        onPressed: () {},
+                      ),
+                    ),
                   ),
                 ],
               ),
