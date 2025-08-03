@@ -155,7 +155,7 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                   ),
                   child: const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.0),
-                    child: Text('Enviar Denúncia', style: TextStyle(fontSize: 16)),
+                    child: Text('Enviar Denúncia', style: TextStyle(fontSize: 12)),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -169,7 +169,7 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                   ),
                   child: const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.0),
-                    child: Text('Cancelar', style: TextStyle(fontSize: 16)),
+                    child: Text('Cancelar', style: TextStyle(fontSize: 12)),
                   ),
                 ),
               ],
