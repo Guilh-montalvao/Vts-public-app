@@ -121,7 +121,13 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.insert_drive_file_outlined, size: 40, color: Colors.black38),
+                      // Icon(Icons.insert_drive_file_outlined, size: 40, color: Colors.black38),
+                      Image.asset(
+                        'assets/images/file.png',
+                        width: 40,
+                        height: 40,
+                        color: Colors.black,
+                      ),
                       const SizedBox(height: 8),
                       const Text(
                         'Envie seu vídeo, tire uma foto ou',
