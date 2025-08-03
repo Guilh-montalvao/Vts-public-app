@@ -81,7 +81,7 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                       checkColor: Colors.white,
                       activeColor: Colors.black,
                     ),
-                    const Text('Anônimo', style: TextStyle(color: Colors.black45, fontSize: 16)),
+                    const Text('Anônimo', style: TextStyle(color: Colors.black45, fontSize: 14)),
                   ],
                 ),
                 TextField(
