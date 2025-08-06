@@ -51,8 +51,9 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 50),
                 TextField(
+                  style: const TextStyle(fontSize: 14),
                   decoration: InputDecoration(
                     hintText: 'Nome',
                     border: OutlineInputBorder(
@@ -85,6 +86,7 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                   ],
                 ),
                 TextField(
+                  style: const TextStyle(fontSize: 14),
                   decoration: InputDecoration(
                     hintText: 'Endereço',
                     border: OutlineInputBorder(
@@ -106,6 +108,7 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                 TextField(
                   minLines: 4,
                   maxLines: 6,
+                  style: const TextStyle(fontSize: 14),
                   decoration: InputDecoration(
                     hintText: 'Conte mais sobre o problema',
                     border: OutlineInputBorder(
@@ -126,7 +129,8 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                 const SizedBox(height: 16),
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  height: 90,
+                  padding: EdgeInsets.zero,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black26, width: 1),
                     borderRadius: BorderRadius.circular(6),
@@ -134,30 +138,33 @@ class _DenunciaFocosScreenState extends State<DenunciaFocosScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Icon(Icons.insert_drive_file_outlined, size: 40, color: Colors.black38),
                       Image.asset(
                         'assets/images/file.png',
-                        width: 40,
-                        height: 40,
+                        width: 30,
+                        height: 30,
                         color: Colors.black,
                       ),
-                      const SizedBox(height: 8),
-                      const Text(
+                      SizedBox(height: 4),
+                      Text(
                         'Envie seu vídeo, tire uma foto ou',
-                        style: TextStyle(fontSize: 13, color: Colors.black38),
+                        style: TextStyle(fontSize: 8, color: Colors.black38),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 8),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black26,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                          shape: StadiumBorder(),
-                          elevation: 0,
+                      SizedBox(height: 4),
+                      SizedBox(
+                        width: 92,
+                        height: 16,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black26,
+                            foregroundColor: Colors.white,
+                            padding: EdgeInsets.zero,
+                            shape: StadiumBorder(),
+                            elevation: 0,
+                          ),
+                          child: Text('Escolha o arquivo', style: TextStyle(fontSize: 8)),
                         ),
-                        child: const Text('Escolha o arquivo', style: TextStyle(fontSize: 13)),
                       ),
                     ],
                   ),
